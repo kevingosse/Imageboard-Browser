@@ -1,0 +1,88 @@
+﻿<imageBoardBrowser:BasePage
+    x:Class="ImageBoardBrowser.AddNewBoard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:imageBoardBrowser="clr-namespace:ImageBoardBrowser"
+    xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
+    xmlns:phoneTextBox="clr-namespace:Telerik.Windows.Controls.PhoneTextBox;assembly=Telerik.Windows.Controls.Primitives"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    d:DesignHeight="768"
+    d:DesignWidth="480"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    Orientation="Portrait"
+    shell:SystemTray.IsVisible="True"
+    SupportedOrientations="PortraitOrLandscape"
+    mc:Ignorable="d">
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="TitlePanel"
+                    Grid.Row="0"
+                    Margin="12,17,0,28">
+            <TextBlock x:Name="ApplicationTitle"
+                       Style="{StaticResource PhoneTextNormalStyle}"
+                       Text="{Binding Path=ViewModel.ApplicationTitle}" 
+                       Margin="0,0,12,0"
+                       FontSize="21.333"/>
+            <TextBlock x:Name="PageTitle"
+                       Style="{StaticResource PhoneTextTitle1Style}"
+                       Text="my boards" TextAlignment="Left" Height="95" >
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                </TextBlock.Foreground>
+            </TextBlock>
+        </StackPanel>
+
+        <Grid x:Name="ContentPanel"
+              Grid.Row="1"
+              Margin="12,0,12,0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <telerikPrimitives:RadTextBox
+                x:Name="TextBoxName"
+                Watermark="name"
+                Grid.Row="0"
+                Grid.Column="0" 
+                ActionButtonVisibility="Visible"
+                ActionButtonTap="NameHelpTap"
+                TextChanged="NameChanged">
+                <telerikPrimitives:RadTextBox.ActionButtonStyle>
+                    <Style TargetType="phoneTextBox:TextBoxActionButton">
+                        <Setter Property="RestStateImageSource" Value="Icons\Question.png" />
+                    </Style>
+                </telerikPrimitives:RadTextBox.ActionButtonStyle>
+            </telerikPrimitives:RadTextBox>
+
+            <telerikPrimitives:RadTextBox
+                x:Name="TextBoxDescription"
+                Watermark="description"
+                ClearButtonTap="TextBoxDescriptionClearButtonTap"
+                KeyDown="TextBoxDescriptionKeyDown"
+                Grid.Row="1"
+                Grid.Column="0">
+            </telerikPrimitives:RadTextBox>
+        </Grid>
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False">
+            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.add.rest.png" Text="Add" Click="ButtonAddClick"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</imageBoardBrowser:BasePage>

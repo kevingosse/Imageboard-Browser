@@ -1,0 +1,482 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{20C3493C-2B02-42B0-9546-ED6F206EC3ED}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ImageBoardBrowser</RootNamespace>
+    <AssemblyName>ImageBoardBrowser</AssemblyName>
+    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
+    <SilverlightVersion>
+    </SilverlightVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <TargetFrameworkIdentifier>WindowsPhone</TargetFrameworkIdentifier>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>
+    </SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>ImageBoardBrowser_$(Configuration)_$(Platform).xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>ImageBoardBrowser.App</SilverlightAppEntry>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <Utf8Output>true</Utf8Output>
+    <ExpressionBlendVersion>4.0.30816.0</ExpressionBlendVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <DefaultLanguage>en-US</DefaultLanguage>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;SILVERLIGHT;WINDOWS_PHONE;WP7</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AdFree|AnyCPU'">
+    <OutputPath>bin\AdFree\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE;PREMIUM;WP7</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>Bin\Release\ImageBoard Browser.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Trial|AnyCPU'">
+    <OutputPath>bin\Trial\</OutputPath>
+    <DefineConstants>SILVERLIGHT;WINDOWS_PHONE;PREMIUM;TRIAL;WP7</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget />
+    <OutputPath>Bin\x86\Debug</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget />
+    <OutputPath>Bin\x86\Release</OutputPath>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <PlatformTarget />
+    <OutputPath>Bin\ARM\Debug</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <PlatformTarget />
+    <OutputPath>Bin\ARM\Release</OutputPath>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AdFree|ARM'">
+    <OutputPath>Bin\ARM\AdFree\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE;PREMIUM</DefineConstants>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AdFree|x86'">
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE;PREMIUM</DefineConstants>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\x86\AdFree\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Coding4Fun.Phone.Controls, Version=1.5.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Coding4Fun.Phone.Controls.1.5.6\lib\sl4-windowsphone71\Coding4Fun.Phone.Controls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GIFSurface">
+      <HintPath>..\lib\$(Platform)\GIFSurface.winmd</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Phone.Controls, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
+      <HintPath>..\packages\SilverlightToolkitWP.4.2011.12.13\lib\sl4-windowsphone71\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\wp8\Microsoft.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\wp8\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Phone, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\wp8\Microsoft.Threading.Tasks.Extensions.Phone.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.28\lib\sl4-windowsphone71\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.28\lib\sl4-windowsphone71\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.28\lib\sl4-windowsphone71\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Behaviors">
+      <HintPath>..\lib\Telerik\Telerik.Windows.Behaviors.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Data">
+      <HintPath>..\lib\Telerik\Telerik.Windows.Controls.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.DataVisualization">
+      <HintPath>..\lib\Telerik\Telerik.Windows.Controls.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Input">
+      <HintPath>..\lib\Telerik\Telerik.Windows.Controls.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Primitives">
+      <HintPath>..\lib\Telerik\Telerik.Windows.Controls.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Core">
+      <HintPath>..\lib\Telerik\Telerik.Windows.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Data">
+      <HintPath>..\lib\Telerik\Telerik.Windows.Data.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SplashScreen.xaml.cs">
+      <Link>SplashScreen.xaml.cs</Link>
+      <DependentUpon>SplashScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddNewBoard.xaml.cs">
+      <DependentUpon>AddNewBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BasePage.cs" />
+    <Compile Include="Catalog.xaml.cs">
+      <DependentUpon>Catalog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChanUriMapper.cs" />
+    <Compile Include="ColorExtensions.cs" />
+    <Compile Include="Configuration.xaml.cs">
+      <DependentUpon>Configuration.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\BoolToBrushConverter.cs" />
+    <Compile Include="Converters\StringToBrushConverter.cs" />
+    <Compile Include="DiaporamaTimer.cs" />
+    <Compile Include="Extension.cs" />
+    <Compile Include="Favorite.cs" />
+    <Compile Include="Favorites.xaml.cs">
+      <DependentUpon>Favorites.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helper.cs" />
+    <Compile Include="Converters\HistoryToColorConverter.cs" />
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\NullVisibilityConverter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReplyMessage.xaml.cs">
+      <DependentUpon>ReplyMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ReviewBugger.cs" />
+    <Compile Include="ScrollableRadDataBoundList.cs" />
+    <Compile Include="SelectSite.xaml.cs">
+      <DependentUpon>SelectSite.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TopicsHelpPage.xaml.cs">
+      <DependentUpon>TopicsHelpPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewBoards.xaml.cs">
+      <DependentUpon>ViewBoards.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewGif.xaml.cs">
+      <DependentUpon>ViewGif.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewImage.xaml.cs">
+      <DependentUpon>ViewImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel.cs" />
+    <Compile Include="ViewTopic.xaml.cs">
+      <DependentUpon>ViewTopic.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Page Include="SplashScreen.xaml">
+      <Link>SplashScreen.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AddNewBoard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Catalog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Configuration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Favorites.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReplyMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SelectSite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TopicsHelpPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewBoards.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ViewGif.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ViewImage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ViewTopic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\BadgeLogo.png" />
+    <Content Include="Assets\Logo.png" />
+    <Content Include="Assets\SplashScreen.png" />
+    <Content Include="Assets\SquareTile150x150.png" />
+    <Content Include="Assets\SquareTile71x71.png" />
+    <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Assets\WideLogo.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    <None Include="packages.config" />
+    <None Include="Properties\AppManifest.xml" />
+    <None Include="Properties\WMAppManifest.xml">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ApplicationIconSmall.png">
+      <Link>ApplicationIconSmall.png</Link>
+    </Content>
+    <Content Include="Icons\appbar.add.rest.png" />
+    <Content Include="Icons\appbar.back.rest.png" />
+    <Content Include="Icons\appbar.cancel.rest.png" />
+    <Content Include="Icons\appbar.delete.rest.png" />
+    <Content Include="Icons\appbar.edit.rest.png" />
+    <Content Include="Icons\appbar.favs.addto.rest.png" />
+    <Content Include="Icons\appbar.favs.removefrom.rest.png" />
+    <Content Include="Icons\appbar.favs.rest.png" />
+    <Content Include="Icons\appbar.feature.settings.rest.png" />
+    <Content Include="Icons\appbar.next.rest.png" />
+    <Content Include="Icons\appbar.overflowdots.png" />
+    <Content Include="Icons\appbar.photo.redeye.rest.png" />
+    <Content Include="Icons\appbar.questionmark.rest.png" />
+    <Content Include="Icons\appbar.refresh.rest.png" />
+    <Content Include="Icons\appbar.repond.rest.png" />
+    <Content Include="Icons\appbar.save.rest.png" />
+    <Resource Include="Images\HelpThread.png" />
+    <Content Include="Icons\appbar.transport.pause.rest.png" />
+    <Content Include="Icons\appbar.transport.play.rest.png" />
+    <Content Include="Icons\arrow.png" />
+    <Content Include="Icons\globe.png" />
+    <Content Include="Icons\Link.png" />
+    <Content Include="Icons\lock.png" />
+    <Content Include="Icons\Question.png" />
+    <Content Include="Images\UserVoice_logo.png" />
+    <Content Include="splash2.png" />
+    <Resource Include="ApplicationIcon.png" />
+    <Content Include="Background.png" />
+    <Content Include="oldSplashScreenImage.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImageBoard.Controls\ImageBoard.Controls.csproj">
+      <Project>{7C52C9E4-9CC2-442A-B4F3-C70AB686E0DD}</Project>
+      <Name>ImageBoard.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageBoard.Parsers.AnonIb\ImageBoard.Parsers.AnonIb.csproj">
+      <Project>{D4A0FF92-52D5-44AA-8CD7-13E011C6D99C}</Project>
+      <Name>ImageBoard.Parsers.AnonIb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageBoard.Parsers.Common\ImageBoard.Parsers.Common.csproj">
+      <Project>{C665C5C5-EFAC-4C29-A25A-FE4DDD28DD6F}</Project>
+      <Name>ImageBoard.Parsers.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageBoard.Parsers.EightChan\ImageBoard.Parsers.EightChan.csproj">
+      <Project>{F5F5E6D4-3B25-459E-8E59-EF79EE6A4F7A}</Project>
+      <Name>ImageBoard.Parsers.EightChan</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageBoard.Parsers.FChan\ImageBoard.Parsers.FChan.csproj">
+      <Project>{69EFFF86-3CB9-4ACE-B967-E584DA352894}</Project>
+      <Name>ImageBoard.Parsers.FChan</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageBoard.Parsers.FetChan\ImageBoard.Parsers.FetChan.csproj">
+      <Project>{39305B39-A840-4D32-B6FD-5D0A81013FE0}</Project>
+      <Name>ImageBoard.Parsers.FetChan</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageBoard.Parsers.FiftyFiveChan\ImageBoard.Parsers.FiftyFiveChan.csproj">
+      <Project>{A9D58856-6A70-44D9-87E8-5262FFDF4B8D}</Project>
+      <Name>ImageBoard.Parsers.FiftyFiveChan</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageBoard.Parsers.FourChan\ImageBoard.Parsers.FourChan.csproj">
+      <Project>{9C412C44-F5F9-4FF6-8827-0A78C767363C}</Project>
+      <Name>ImageBoard.Parsers.FourChan</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageBoard.Parsers.FourTwentyChan\ImageBoard.Parsers.FourTwentyChan.csproj">
+      <Project>{1E6A01CC-4CF3-479E-A66B-C34B12AAB833}</Project>
+      <Name>ImageBoard.Parsers.FourTwentyChan</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageBoard.Parsers.KrautChan\ImageBoard.Parsers.KrautChan.csproj">
+      <Project>{43CB4B29-3D18-4A3D-8BA6-2509DB8AACCA}</Project>
+      <Name>ImageBoard.Parsers.KrautChan</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageBoard.Parsers.ManeChan\ImageBoard.Parsers.ManeChan.csproj">
+      <Project>{5EABB343-87E0-4370-961B-467E9ACA8411}</Project>
+      <Name>ImageBoard.Parsers.ManeChan</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageBoard.Parsers.MlpChan\ImageBoard.Parsers.MlpChan.csproj">
+      <Project>{F6A9053B-CE94-414B-815B-43CC6CC704C5}</Project>
+      <Name>ImageBoard.Parsers.MlpChan</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageBoard.Parsers.NewFapChan\ImageBoard.Parsers.NewFapChan.csproj">
+      <Project>{B72B42B2-F8BE-47A3-9F9E-1E17C9998839}</Project>
+      <Name>ImageBoard.Parsers.NewFapChan</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageBoard.Parsers.OperatorChan\ImageBoard.Parsers.OperatorChan.csproj">
+      <Project>{35DCFB37-F902-4DAA-A227-B8BBF3711DBB}</Project>
+      <Name>ImageBoard.Parsers.OperatorChan</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageBoard.Parsers.PonyChan\ImageBoard.Parsers.PonyChan.csproj">
+      <Project>{A7399B0D-8145-49FD-9663-D62EA77AFA79}</Project>
+      <Name>ImageBoard.Parsers.PonyChan</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageBoard.Parsers.SevenChan\ImageBoard.Parsers.SevenChan.csproj">
+      <Project>{7E76F747-A4D5-4E0F-882A-96BA3B17F05E}</Project>
+      <Name>ImageBoard.Parsers.SevenChan</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageBoard.Parsers.SeventySevenChan\ImageBoard.Parsers.SeventySevenChan.csproj">
+      <Project>{74DF4860-270E-4D88-8B66-C25AE001EF33}</Project>
+      <Name>ImageBoard.Parsers.SeventySevenChan</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageBoard.Parsers.WizardChan\ImageBoard.Parsers.WizardChan.csproj">
+      <Project>{A0C944CF-9FDB-4BEF-9B36-38796A3464AC}</Project>
+      <Name>ImageBoard.Parsers.WizardChan</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageBoard.Parsers.Ylilauta\ImageBoard.Parsers.Ylilauta.csproj">
+      <Project>{69A227BC-F212-419C-9546-9EA475E61A30}</Project>
+      <Name>ImageBoard.Parsers.Ylilauta</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageTools\Source\src\ImageTools\ImageTools.Controls.Phone\ImageTools.Controls.Phone.csproj">
+      <Project>{30BEDEDE-3224-49FA-9340-8A82447619CB}</Project>
+      <Name>ImageTools.Controls.Phone</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageTools\Source\src\ImageTools\ImageTools.IO.Gif.Phone\ImageTools.IO.Gif.Phone.csproj">
+      <Project>{58E343B0-5342-4266-8F2E-E1D0554B9D11}</Project>
+      <Name>ImageTools.IO.Gif.Phone</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageTools\Source\src\ImageTools\ImageTools.Phone\ImageTools.Phone.csproj">
+      <Project>{5876DA9E-C3DF-4D27-835F-DF998658CB6E}</Project>
+      <Name>ImageTools.Phone</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WP7_Mango_HtmlTextBlockControl\WP7_Mango_HtmlTextBlockControl.csproj">
+      <Project>{48901D54-1574-47A3-88C3-413B5F1D0E3B}</Project>
+      <Name>WP7_Mango_HtmlTextBlockControl</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+</Project>

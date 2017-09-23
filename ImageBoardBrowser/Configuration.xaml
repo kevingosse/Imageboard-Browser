@@ -1,0 +1,142 @@
+﻿<imageBoardBrowser:BasePage x:Class="ImageBoardBrowser.Configuration"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:telerikInput="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Input"
+                            xmlns:UI="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
+                            xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
+                            xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+                            xmlns:imageBoardBrowser="clr-namespace:ImageBoardBrowser"
+                            d:DesignHeight="768"
+                            d:DesignWidth="480"
+                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                            FontSize="{StaticResource PhoneFontSizeNormal}"
+                            Foreground="{StaticResource PhoneForegroundBrush}"
+                            Orientation="Portrait"
+                            shell:SystemTray.IsVisible="True"
+                            SupportedOrientations="Portrait"
+                            mc:Ignorable="d">
+
+    <Grid x:Name="LayoutRoot"
+          Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="TitlePanel"
+                    Grid.Row="0"
+                    Margin="12,17,0,0">
+            <TextBlock x:Name="ApplicationTitle"
+                       FontSize="21.333"
+                       Style="{StaticResource PhoneTextNormalStyle}"
+                       Text="SETTINGS" />
+        </StackPanel>
+
+        <Grid x:Name="ContentPanel"
+              Grid.Row="1"
+              Margin="12,0,12,0">
+            <controls:Pivot x:Name="Pivot">
+                <controls:Pivot.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}"
+                                   Style="{StaticResource PhoneTextLargeStyle}"/>
+                    </DataTemplate>
+                </controls:Pivot.HeaderTemplate>
+                <controls:Pivot.Items>
+                    <controls:PivotItem
+                        Header="Navigation"
+                        Tag="navigation">
+                        <ScrollViewer>
+                            <StackPanel>
+                                <telerikPrimitives:RadToggleSwitch
+                                    Header="Force vertical orientation"
+                                    IsChecked="{Binding Path=ViewModel.IsOrientationLockActivated, Mode=TwoWay}"/>
+
+                                <telerikPrimitives:RadToggleSwitch
+                                    Header="When choosing a board, show catalog view first"
+                                    IsChecked="{Binding Path=ViewModel.IsCatalogViewPerDefault, Mode=TwoWay}" />
+
+                                <telerikPrimitives:RadToggleSwitch
+                                    IsChecked="{Binding Path=ViewModel.AddReplyToFavorites, Mode=TwoWay}">
+                                    <telerikPrimitives:RadToggleSwitch.Header>
+                                        <TextBlock
+                                            Text="When posting a reply, check the &quot;Add thread to favorites&quot; box per default"
+                                            TextWrapping="Wrap"/>
+                                    </telerikPrimitives:RadToggleSwitch.Header>
+                                </telerikPrimitives:RadToggleSwitch>
+
+                                <telerikPrimitives:RadToggleSwitch
+                                    IsChecked="{Binding Path=ViewModel.GreenTextIsGreen, Mode=TwoWay}"
+                                    Header="Greentext is green (4chan only)"/>
+
+                                <telerikPrimitives:RadToggleSwitch
+                                    CheckedChanged="PersistHistoryCheckedChanged"
+                                    IsChecked="{Binding Path=ViewModel.PersistHistory, Mode=TwoWay}">
+                                    <telerikPrimitives:RadToggleSwitch.Header>
+                                        <TextBlock
+                                            Text="Persist history (if disabled, then further history entries will be lost when exiting the app)"
+                                            TextWrapping="Wrap"/>
+                                    </telerikPrimitives:RadToggleSwitch.Header>
+                                </telerikPrimitives:RadToggleSwitch>
+
+                                <TextBlock
+                                    Margin="{StaticResource PhoneHorizontalMargin}"
+                                    Style="{StaticResource PhoneTextSubtleStyle}"
+                                    Text="{Binding Path=UsedSpaceForHistory, StringFormat='{}{0} KB are currently used for history', FallbackValue='An error occured while computing the space used by the history'}"
+                                    TextWrapping="Wrap"/>
+                            
+                                <Button
+                                    x:Name="ButtonClearHistory"
+                                    Click="ButtonClearHistoryClick"
+                                    Content="clear history" />
+                            
+                            </StackPanel>
+                        </ScrollViewer>
+                    </controls:PivotItem>
+
+                    <controls:PivotItem
+                        Header="Slideshow"
+                        Tag="slideshow">
+                        <StackPanel>
+                            <telerikInput:RadNumericUpDown
+                                Margin="0 12 0 0"                                                
+                                x:Name="DelayPicker"
+                                ValueChanging="DelayPickerValueChanging"
+                                Header="Seconds between pictures: "
+                                Value="{Binding Path=ViewModel.SlideShowDelay, Mode=TwoWay}" />
+
+                            <telerikPrimitives:RadToggleSwitch
+                                Header="Loop"
+                                IsChecked="{Binding Path=ViewModel.IsSlideShowLoopActivated, Mode=TwoWay}"/>
+
+                            <TextBlock
+                                TextWrapping="Wrap"
+                                Text="If 'Loop' is activated, the slideshow will automatically go back to the first picture after the last one. Otherwise, it'll stop."
+                                Margin="10 0 10 0"/>
+                            
+                            <telerikPrimitives:RadToggleSwitch
+                                Header="Stream animated GIFs"
+                                IsChecked="{Binding Path=ViewModel.IsGifStreamingEnabled, Mode=TwoWay}"/>
+
+                            <TextBlock
+                                TextWrapping="Wrap"
+                                Text="If disabled, then animated GIFs will be loaded completely before playing."
+                                Margin="10 0 10 0"/>
+
+                        </StackPanel>
+
+                    </controls:PivotItem>
+
+                </controls:Pivot.Items>
+
+            </controls:Pivot>
+
+        </Grid>
+    </Grid>
+
+</imageBoardBrowser:BasePage>

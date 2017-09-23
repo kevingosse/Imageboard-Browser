@@ -1,0 +1,864 @@
+﻿<ImageBoardBrowser:BasePage x:Class="ImageBoardBrowser.SelectSite"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:UI="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
+                            xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
+                            xmlns:telerik="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Core"
+              xmlns:ImageBoardBrowser="clr-namespace:ImageBoardBrowser" d:DesignHeight="768"
+                            d:DesignWidth="480"
+                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                            FontSize="{StaticResource PhoneFontSizeNormal}"
+                            Foreground="{StaticResource PhoneForegroundBrush}"
+                            Orientation="Portrait"
+                            shell:SystemTray.IsVisible="True"
+                            SupportedOrientations="PortraitOrLandscape"
+                            mc:Ignorable="d">
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="TitlePanel"
+                    Grid.Row="0"
+                    Margin="12,17,0,20">
+            <TextBlock x:Name="ApplicationTitle"
+                       Style="{StaticResource PhoneTextNormalStyle}"
+                       Text="{Binding Path=ViewModel.ApplicationTitle}" 
+                       FontSize="21.333" />
+        </StackPanel>
+
+        <controls:Panorama x:Name="Panorama" Grid.Row="1" SelectionChanged="Panorama_SelectionChanged">
+            <controls:PanoramaItem Header="your boards">
+                <controls:PanoramaItem.Foreground>
+                    <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                </controls:PanoramaItem.Foreground>
+
+                <Grid x:Name="ContentPanel"
+                      Margin="12,0,12,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0">
+                        <TextBlock Text="To add a new image board website, type its name or its address:" TextWrapping="Wrap" >
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{StaticResource PhoneContrastBackgroundColor}"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                        <StackPanel Orientation="Horizontal" Margin="-12,0,0,0">
+                            <TextBox x:Name="TextBoxSite" Width="314" />
+                            <Button Click="ButtonClick" Content="Add" Margin="0,0,-104,0" Width="106" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <ListBox Grid.Row="1"
+                             ItemsSource="{Binding Path=ViewModel.Sites}"
+                             SelectionChanged="ListBoxSelectionChanged" Margin="0,-1,0,0"
+                             telerik:InteractionEffectManager.IsInteractionEnabled="True">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <telerikPrimitives:RadContextMenu.ContextMenu>
+                                        <telerikPrimitives:RadContextMenu>
+                                            <telerikPrimitives:RadContextMenuItem Tap="MenuItemClick" Content="Delete" />
+                                        </telerikPrimitives:RadContextMenu>
+                                    </telerikPrimitives:RadContextMenu.ContextMenu>
+
+                                    <StackPanel>
+                                        <TextBlock Style="{StaticResource PhoneTextExtraLargeStyle}" Text="{Binding}" />
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                </Grid>
+            </controls:PanoramaItem>
+
+            <controls:PanoramaItem Header="about">
+                <controls:PanoramaItem.Foreground>
+                    <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                </controls:PanoramaItem.Foreground>
+                <ScrollViewer>
+                    <StackPanel>
+                        <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap">
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{StaticResource PhoneContrastBackgroundColor}"/>
+                            </TextBlock.Foreground><Run Text="   "/><Run FontWeight="Bold" Text="ImageBoard Browser "/><Run Text="is an app that lets you browse famous image boards, save images, and post replies."/><Run Text=" "/><LineBreak/><Run Text=" "/><LineBreak/><Run Text=" "/><Run Text="   When starting the application for the first time, the list of websites is empty. You have to add the websites you like by using the 'Add' button."/><Run Text=" "/><LineBreak/><Run Text=" "/><LineBreak/><Run Text=" "/><Run Text="   If you'd like this application to support more image boards, feel free to contact us with the board name and address! "/></TextBlock>
+
+                        <StackPanel Margin="0 5 0 0" Orientation="Vertical">
+                            <RichTextBox Margin="-10 0 0 0"
+                                         FontSize="21.333"
+                                         Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Paragraph>
+                                    <Run Text="If you notice a bug or a missing feature, either" />
+                                    <Hyperlink Click="ContactButtonClick">
+                                        <Run Text="click here to send us an email," Foreground="{StaticResource PhoneAccentBrush}" />
+                                    </Hyperlink>
+
+                                    <Hyperlink Click="TwitterButtonClick">
+                                        <Run Text="follow us on Twitter," Foreground="{StaticResource PhoneAccentBrush}" />
+                                    </Hyperlink>
+
+                                    <Run Text="or browse our Uservoice to vote on suggestions." />
+                                </Paragraph>
+                            </RichTextBox>
+
+                            <Button x:Name="ButtonUservoice" Height="100" Click="ButtonUservoiceClick">
+                                <Image Source="Images/UserVoice_logo.png" />
+                            </Button>
+
+                            <StackPanel Margin="0 20 0 0" Orientation="Horizontal">
+                                <TextBlock Text="{Binding Path=ViewModel.ApplicationTitle}"
+                                   TextWrapping="Wrap">
+                                    <TextBlock.Foreground>
+                                        <SolidColorBrush Color="{StaticResource PhoneContrastBackgroundColor}"/>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                                <TextBlock Text=" v"
+                                   TextWrapping="Wrap">
+                                    <TextBlock.Foreground>
+                                        <SolidColorBrush Color="{StaticResource PhoneContrastBackgroundColor}"/>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                                <TextBlock Text="{Binding Path=ViewModel.Version}"
+                                   TextWrapping="Wrap">
+                                    <TextBlock.Foreground>
+                                        <SolidColorBrush Color="{StaticResource PhoneContrastBackgroundColor}"/>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel Margin="0 20 0 0">
+                                <TextBlock Text="WebM playback uses the libvpx wrapper provided by Michael Craig McGee under MIT license."
+                                   TextWrapping="Wrap">
+                                    <TextBlock.Foreground>
+                                        <SolidColorBrush Color="{StaticResource PhoneContrastBackgroundColor}"/>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                                <HyperlinkButton x:Name="LicenseLink" Content="View license" Click="LicenseLink_OnClick" />
+                            </StackPanel>
+                        </StackPanel>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </controls:PanoramaItem>
+
+            <controls:PanoramaItem Header="changelog">
+                <controls:PanoramaItem.Foreground>
+                    <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                </controls:PanoramaItem.Foreground>
+                <ScrollViewer>
+                    <StackPanel>
+                        <TextBlock x:Name="LoadingChangelog" Text="Loading changelog..." />
+
+                        <StackPanel x:Name="Changelog" Visibility="Collapsed">
+                            <TextBlock 
+                                Margin="0,0,0,16"
+                                FontSize="21.333"
+                                TextWrapping="Wrap"
+                                Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.18"/>
+                                <LineBreak />                               
+                                <Run Text=" - The good news is that I fixed the captcha (it broke independently of the previous update, I swear)" />
+                                <LineBreak />                               
+                                <Run Text=" - The bad news is that the captcha is even more annoying than it was before. I hope you like copying and pasting codes. Don't try typing it by hand or you'll screw my detection code. Still working on a better version, but I thought that a bad fix was better than no fix at all." />
+                                <LineBreak />                               
+                                <Run Text=" - Oh by the way, when I was proposing, in the previous changelog, to be involved in the development of the Windows 10 version, I was talking about testing, not coding ;)" />
+                            </TextBlock>
+                            
+                            <TextBlock 
+                                Margin="0,0,0,16"
+                                FontSize="21.333"
+                                TextWrapping="Wrap"
+                                Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.17"/>
+                                <LineBreak />                               
+                                <Run Text=" - Fixed handling of experimental boards on 4chan" />
+                                <LineBreak />                               
+                                <Run Text=" - Dropped compatibility with Windows Phone 7 and 8. The app now requires 8.1..." />
+                                <LineBreak />                               
+                                <Run Text=" - ... Which means that you can now save WebM files on the phone" />
+                                <LineBreak />                               
+                                <Run Text=" - As some may have noticed, the update pace has dramatically slowed down. Two reasons: I've been developing other apps, and I've also been working on the Windows 10 version of Imageboard Browser (which will likely be renamed). The new version features a full redesign of the UI, and a rewrite of the browsing engine (meaning that I should at long last be able to support posting on some alternative boards like 420chan). If you want to be involved in the development process, don't hesitate to send me a mail." />
+                            </TextBlock>
+                            
+                            <TextBlock 
+                                Margin="0,0,0,16"
+                                FontSize="21.333"
+                                TextWrapping="Wrap"
+                                Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.16"/>
+                                <LineBreak />                               
+                                <Run Text=" - Fixed an issue with animated GIF when streaming is turned off" />
+                                <LineBreak />                               
+                                <Run Text=" - Fixed an issue where playing a WebM would pause the diaporama" />
+                                <LineBreak />                               
+                                <Run Text=" - Trying a new approach to the whole 'recaptcha is trolling us' issue. I'm not sure the new captcha is completely stable yet, but at least it's now solvable." />
+                                <LineBreak />                               
+                                <Run Text=" - Fixed a few crashes occurences." />
+                            </TextBlock>
+                            
+                            <TextBlock 
+                                Margin="0,0,0,16"
+                                FontSize="21.333"
+                                TextWrapping="Wrap"
+                                Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.15"/>
+                                <LineBreak />                               
+                                <Run Text=" - Fixed WizardChan *tips fedora*" />
+                                <LineBreak />                               
+                                <Run Text=" - Stability improvements" />
+                                <LineBreak />
+                                <Run Text=" - The show/collapse animation of the custom application bar in the fullscreen view is now smoother (woooo!)" />
+                                <LineBreak />                 
+                                <Run Text=" - Oh, and added WebM support. That's a detail, but just wanted to let you guys know. (WP8 only. Sorry WP7 users, that's all I can do)" />
+                            </TextBlock>
+                            
+                            <TextBlock 
+                                Margin="0,0,0,16"
+                                FontSize="21.333"
+                                TextWrapping="Wrap"
+                                Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.14.1"/>
+                                <LineBreak />                               
+                                <Run Text=" - Must fix... captcha... again..." />
+                                <LineBreak />                               
+                                <Run Text=" - Fixed pictures on 8ch.net. Note that the board is going through a lot of changes, I fully expect it to break again in the near future, but I'll try to fix it quickly when it happens" />
+                            </TextBlock>
+                            
+                            <TextBlock 
+                                Margin="0,0,0,16"
+                                FontSize="21.333"
+                                TextWrapping="Wrap"
+                                Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.14"/>
+                                <LineBreak />                               
+                                <Run Text=" - Fixed the lag when going back from the thread view." />
+                                <LineBreak />                               
+                                <Run Text=" - Stability improvements, especially on some alternative image boards." />
+                                <LineBreak />
+                                <Run Text=" - The app now uses the domain 8ch.net for 8chan (though the site will still be displayed as '8chan.co' for backward compatibility reasons)" />
+                                <LineBreak />
+                            </TextBlock>
+
+                            <TextBlock 
+                                Margin="0,0,0,16"
+                                FontSize="21.333"
+                                TextWrapping="Wrap"
+                                Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.13.2 "/>
+                                <LineBreak />                               
+                                <Run Text=" - Fixed *again* the insanely difficult 4chan captcha." />
+                                <LineBreak />
+                                <Run Text=" - On an unrelated note, I'm currently working really hard on the WP8.1 version of the app (including webm support). Hopefully I should be able to publish a beta soon." />
+                            </TextBlock>
+
+                            <TextBlock 
+                                Margin="0,0,0,16"
+                                FontSize="21.333"
+                                TextWrapping="Wrap"
+                                Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.13: "/>
+                                <LineBreak />                               
+                                <Run Text=" - Fix for the insanely difficult 4chan captcha (I didn't mean to troll, I swear)." />
+                            </TextBlock>
+
+                            <TextBlock 
+                                Margin="0,0,0,16"
+                                FontSize="21.333"
+                                TextWrapping="Wrap"
+                                Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.12: "/>
+                                <LineBreak />                               
+                                <Run Text=" - Fixed captcha on 4chan. " />
+                            </TextBlock>
+
+                            <TextBlock 
+                                Margin="0,0,0,16"
+                                FontSize="21.333"
+                                TextWrapping="Wrap"
+                                Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.11: "/>
+                                <LineBreak />                               
+                                <Run Text=" - The now traditional fix for Ylilauta. " />
+                                <LineBreak />                               
+                                <Run Text=" - In the fullscreen view, you can now display the message's content by long-tapping on the picture (tap again to hide)" />
+                            </TextBlock>
+
+                            <TextBlock 
+                                Margin="0,0,0,16"
+                                FontSize="21.333"
+                                TextWrapping="Wrap"
+                                Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.10: "/>
+                                <LineBreak />                               
+                                <Run Text=" - Added support for 8chan.co. Read-only. I know, it sucks, but the anti-bot protection of Tinyboard is a hassle. You can use the 'open in web browser' feature as a temporary workaround. " />
+                                <LineBreak />                               
+                                <Run Text=" - Added flags for /int/ on Krautchan" />
+                                <LineBreak />                               
+                                <Run Text=" - Fixed GIF saving when streaming is disabled" />
+                                <LineBreak />                               
+                                <Run Text=" - On an unrelated note, I've created a Twitter account to give the latest news about the app: @ImageBoardBro" />
+                            </TextBlock>
+
+                            <TextBlock 
+                                Margin="0,0,0,16"
+                                FontSize="21.333"
+                                TextWrapping="Wrap"
+                                Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.9: "/>
+                                <LineBreak />                               
+                                <Run Text=" - Guess what? Fixed Ylilauta." />
+                                <LineBreak />                               
+                                <Run Text=" - While I was at it, added greentext support to Ylilauta, and updated the boards description." />
+                                <LineBreak />                               
+                                <Run Text=" - And since I was still at it, added catalog support to Ylilauta." />
+                                <LineBreak />                               
+                                <Run Text=" - Yup, full Ylilauta update. 'till it breaks again!" />
+                            </TextBlock>
+
+                            <TextBlock 
+                                Margin="0,0,0,16"
+                                FontSize="21.333"
+                                TextWrapping="Wrap"
+                                Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.8.2: "/>
+                                <LineBreak />                               
+                                <Run Text=" - Fixed the search feature in the catalog." />
+                            </TextBlock>
+
+                            <TextBlock 
+                                Margin="0,0,0,16"
+                                FontSize="21.333"
+                                TextWrapping="Wrap"
+                                Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.8.1: "/>
+                                <LineBreak />
+                                <Run Text=" - Greentext is green AND doesn't crash the app." />
+                                <LineBreak />
+                                <Run Text=" - Greentext is green everywhere (including the threads view and the catalog view). It's still limited to 4chan though." />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.8: "/>
+                                <LineBreak />
+                                <Run Text=" - When posting a message, added a checkbox to automatically add the thread to favorites. Added a setting to check this box per default." />
+                                <LineBreak />
+                                <Run Text="Note that when creating a new thread, adding it automatically to favorites will only work on 4chan. Also, it will be added only when it's done refreshing." />
+                                <LineBreak />
+                                <Run Text=" - Greentext is green (or isn't, depending on your settings)." />
+                                <LineBreak />
+                                <Run Text=" - Fixed a bug where the &quot;Comment&quot; part of the reply page wasn't cleared if going back without posting the message." />
+                                <LineBreak />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.7: "/>
+                                <LineBreak />
+                                <Run Text=" - Fixed ylilauta (as usual). Added flags support on /int/ while I was at it." />
+                                <LineBreak />
+                                <Run Text=" - Add support for two new image boards: 55ch and 77chan. Read-only for now, as I have some trouble getting past the captcha." />
+                                <LineBreak />
+                                <Run Text=" - For all those who are asking for webm support: I've heard you, but I can't do anything at the moment. For WP7 it's technically impossible (I'll drop WP7 support in a few months anyway). For WP8, it's possible but my C skills aren't good enough for that (if anyone is willing to make a DirectX wrapper for libvpx, I'll add it right away to the app, but I can't do it by myself). I may have a solution for WP8.1, but I'd have to drop support for WP8, so I won't do it until the update is widespread." />
+                                <LineBreak />
+                                <Run Text="In the meantime, I have updated the 4chan code to filter webm, so you won't waste your bandwidth on them. You'll still see the thumbnails, but they won't appear in the fullscreen view." />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.6: "/>
+                                <LineBreak />
+                                <Run Text=" - The first page of the threads view on 4chan wasn't refreshing properly." />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.5: "/>
+                                <LineBreak />
+                                <Run Text=" - Fixed picture loading on ylilauta." />
+                                <LineBreak />
+                                <Run Text=" - Added support for IDs on /b/. Note: I'm still trying to figure out the best UI for this feature, if you have any idea please send me a mail." />
+                                <LineBreak />
+                                <Run Text=" - When refreshing a thread, back-links on previous messages are refreshed as well." />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.4: "/>
+                                <LineBreak />
+                                <Run Text=" - Flags are now supported on 4chan." />
+                                <LineBreak />
+                                <Run Text=" - Fixed &quot;open in web browser&quot; feature on 4chan." />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.3: "/>
+                                <LineBreak />
+                                <Run Text=" - Fixed pictures loading on the furry imageboard." />
+                                <LineBreak />
+                                <Run Text=" - Added support for a new image board: anonib.com." />
+                            </TextBlock>
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.2: "/>
+                                <LineBreak />
+                                <Run Text=" - Fixed an issue with threads that have been added to favorites before version 3.1. Please note that history may not work properly on those favorites if you do not load them at least once after updating the app." />
+                                <LineBreak />
+                                <Run Text=" - Added support for a new image board: wizardchan.org (read-only, blame the insane anti-bot protection)." />
+                            </TextBlock>
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.1: "/>
+                                <LineBreak />
+                                <Run Text=" - Revamped the 'Favorites' page. Now displaying threads as thumbnails. A colored border indicates which threads have new messages. 404 threads are tinted in red and can be removed all at once using the trash icon in the application bar." />
+                                <LineBreak />
+                                <Run Text=" - Added history support for the catalog. Visited threads have a green border if there's new messages, or blue if there's no new messages. When tapping on a thread, you can see the number of new messages." />
+                                <LineBreak />
+                                <Run Text=" - Redesigned a bit the 'add new board' page" />
+                                <LineBreak />
+                                <Run Text=" - Added a setting to directly show the catalog when choosing a board, instead of the thread view." />
+                                <LineBreak />
+                                <Run Text=" - Added a setting to disable GIF streaming (allows you to keep seeing the previous animated GIF while the new one is loading)." />
+                                <LineBreak />
+                                <Run Text=" - In the reply page, moved the 'submit' button to the application bar for easier access." />
+                                <LineBreak />
+                                <Run Text=" - Fixed an error message when creating a new thread on 4chan." />
+                                <LineBreak />
+                                <Run Text=" - Fixed a bug where the preview ribbon (in the sildeshow view) would become empty after opening the settings screen." />
+                            </TextBlock>
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                                <Run Text="   "/>
+                                <Run FontWeight="Bold" Text="What's new in 3.0: "/>
+                                <LineBreak />
+                                <Run Text=" - Added support for a new image board: mlpchan.net (read-only)." />
+                                <LineBreak />
+                                <Run Text=" - Support for catalog feature (so far, on 4chan and mlpchan), with built-in search." />
+                                <LineBreak />
+                                <Run Text=" - Added back-linking support on all image boards." />
+                                <LineBreak />
+                                <Run Text=" - Changed the back-button behavior when displaying a quote/reply. It will now go back to the previous quote/reply (convenient if following a chain of replies). If there is none, then it will close the popup." />
+                                <LineBreak />
+                                <Run Text=" - The fullscreen view now show a preview of all pictures in the application bar, along with the picture count" />
+                                <LineBreak />
+                                <Run Text=" - Added an orientation lock for the fullscreen view (independant from the global orientation lock)." />
+                                <LineBreak />
+                                <Run Text=" - Improved the animated GIF rendering engine. Dramatically reduced the memory footprint, and GIF are now played while downloading (like in most web browsers)" />
+                                <LineBreak />
+                                <Run Text=" - Revamped the reply page." />
+                                <LineBreak />
+                                <Run Text=" - Fixed browsing on ylilauta.org." />
+                                <LineBreak />
+                                <Run Text=" - Added a protection when loading very large pictures that would otherwise crash the application: on WP8 they are automatically downscaled, on WP7 an error message is displayed." />
+                                <LineBreak />
+                                <Run Text=" - Resized the application icon to better fit the Windows Phone guidelines." />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 2.11: "/>
+                            <LineBreak />
+                            <Run Text=" - Fixed a crash when resuming the application after letting it inactive for a while." />
+                            <LineBreak />
+                            <Run Text=" - Added support for an additional image board: manechan." />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 2.10: "/>
+                            <LineBreak />
+                            <Run Text=" - Hotfix for the once-more broken pinned boards." />
+                            </TextBlock>
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 2.9: "/>
+                            <LineBreak />
+                            <Run Text=" - Fixed browsing on ylilauta.org." />
+                            <LineBreak />
+                            <Run Text=" - Fixed the /wooo/ board on 420chan.org." />
+                            <LineBreak />
+                            <Run Text=" - Fixed the crash when pinning a board on Windows Phone 8." />
+                            <LineBreak />
+                            <Run Text=" - Windows Phone 8 users only: you can now save animated gif." />
+                            <LineBreak />
+                            <Run Text=" - Windows Phone 8 again: fixed a bug that was causing the app to use abnormally high amounts of storage." />
+                            <LineBreak />
+                            <Run Text=" - Changed the splashscreen and improved loading time." />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 2.8: "/>
+                            <LineBreak />
+                            <Run Text=" - Fixed the two annoying crashes introduced by version 2.7. Messed up badly on that one, sorry!" />
+                            <LineBreak />
+                            <Run Text=" - Created a Uservoice to help me to prioritize the feature requests and bug fixes. The link is on the 'About' page." />
+                            <LineBreak />
+                            <Run Text=" - Added preliminary support for swipe gesture when browsing pictures. It allows you to go to the next or previous picture without using the toolbar. Swipe either left or right until the picture stops moving, then release. The current picture will still be displayed while the next one loads in the background. Note that the gesture is disabled if the picture is zoomed-in. Just zoom-out to re-enable it." />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 2.7: "/>
+                            <LineBreak />
+                            <Run Text=" - On the board selection screen, you can now display the context menu by pressing your finger anywhere on the same line as the board name (previously it was possible only on the board name). It should make things easier for people who mistakenly added an empty board." />
+                            <LineBreak />
+                            <Run Text=" - Added missing board descriptions for 7chan." />
+                            <LineBreak />
+                            <Run Text=" - Added support for five new boards: ylilauta.org, operatorchan.org, brchan.org, and two NSFW boards whose name won't be evocated here." />
+                            <LineBreak />
+                            <Run Text=" - Fixed a few possible crashes when replying to a thread." />
+                            <LineBreak />
+                            <Run Text=" - Small tiles for pinned boards on Windows Phone 7.8 and 8 now display the board name instead of the application's icon." />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 2.6: "/>
+                            <LineBreak />
+                            <Run Text=" - Added network compression. Should dramatically improve the loading speed, especially with slow connections." />
+                            <LineBreak />
+                            <Run Text=" - Now using the HTTPS version of 4chan." />
+                            <LineBreak />
+                            <Run Text=" - Spoiler text and pictures are now supported on 4chan." />
+                            <LineBreak />
+                            <Run Text=" - Added support for an additional image board: 7chan." />
+                            <LineBreak />
+                            <Run Text=" - Fixed the small tile on Windows Phone 8 devices." />
+                            <LineBreak />
+                            <Run Text=" - Tweaked the layout. Messages are now displayed using the full width of the screen." />
+                            <LineBreak />
+                            <Run Text=" - Fixed a crash occurence when adding a thread with special characters to the favorites." />
+                            <LineBreak />
+                            <Run Text=" - Increased compatibility with malformed animated GIFs." />
+                            <LineBreak />
+                            <Run Text=" - Fixed a image loading issue in the thread list when browsing 420chan." />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 2.5: "/>
+                            <LineBreak />
+                            <Run Text=" - Fixed an issue with reply links on 4chan." />
+                            <LineBreak />
+                            <Run Text=" - Added an orientation lock activable in the settings." />
+                            <LineBreak />
+                            <Run Text=" - Fixed a bug where a message could be truncated after a link." />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 2.4: "/>
+                            <LineBreak />
+                            <Run Text=" - Added landscape mode." />
+                            <LineBreak />
+                            <Run Text=" - Added buttons to scroll to the bottom or top of a thread." />
+                            <LineBreak />
+                            <Run Text=" - Tweaked the layout a bit to give more space to the content." />
+                            <LineBreak />
+                            <Run Text=" - Stability improvement: the application should crash less often, especially when viewing pictures." />
+                            <LineBreak />
+                            <Run Text=" - Added support for a furry image board." />
+                            <LineBreak />
+                            <Run Text=" - Added support for Windows Phone 8's 720p resolution." />
+                            <LineBreak />
+                            <Run Text=" - Fixed a bug that sometimes erased the comments field in a new message after picking a picture." />
+                            <LineBreak />
+                            <Run Text=" - Fixed a crash when trying to open a malformed link." />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 2.3: "/>
+                            <LineBreak />
+                            <Run Text=" - When viewing a picture, you can now zoom by double-tapping." />
+                            <LineBreak />
+                            <Run Text=" - Fixed many random crashes. Crash reports are a precious help, please keep on sending them!" />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 2.2: "/>
+                            <LineBreak />
+                            <Run Text=" - Posting messages on 4chan now works again." />
+                            <LineBreak />
+                            <Run Text=" - You can now post messages/topics on Ponychan." />
+                            <LineBreak />
+                            <Run Text=" - Added support for additional image board: 420chan." />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 2.1: "/>
+                            <LineBreak />
+                            <Run Text=" - Launching the app from a pinned board now works again." />
+                            <LineBreak />
+                            <Run Text=" - Fixed a random crash." />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 2.0: "/>
+                            <LineBreak />
+                            <Run Text=" - Can now copy a message by pressing the finger on it then tapping on 'Copy' in the context menu." />
+                            <LineBreak />
+                            <Run Text=" - Added support for additional image boards: ponychan and krautchan. More image boards will come soon!" />
+                            <LineBreak />
+                            <Run Text=" Notes:" />
+                            <LineBreak />
+                            <Run Text="    * Specific features of the new image boards aren't supported yet (like multiple attachments on krautchan)." />
+                            <LineBreak />
+                            <Run Text="    * You can't post messages or create new topics on ponychan and krautchan. Still working on it!" />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 1.10: "/>
+                            <LineBreak />
+                            <Run Text=" - Fixed many bugs introduced by 4chan's update. If you notice something wrong, please send me a mail." />
+                            <LineBreak />
+                            <Run Text=" - When refreshing a thread, the message list now stays in place." />
+                            <LineBreak />
+                            <Run Text=" - Since 4chan has now a mobile version, added a &quot;open in web browser&quot; option in the threads and thread-detail views. I think it's self explanatory." />
+                            <LineBreak />
+                            <Run Text=" - Added a &quot;go to favorites&quot; option in the threads view." />
+                            <LineBreak />
+                            <Run Text=" - After creating a new thread, you are now automatically redirected to the thread's page." />
+                            <LineBreak />
+                            <Run Text=" - Fixed a bug causing large images (like wallpapers) to be downsampled when saved on the phone" />
+                            <LineBreak />
+                            <Run Text=" - Fixed a few crashes. Keep the reports incoming!" />
+                            <LineBreak />
+                            <Run Text=" - Last but not least, links are now clickable in the messages." />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 1.9: "/>
+                            <LineBreak />
+                            <Run Text=" - Added preliminary support for incoming 4chan's HTML rewrite." />
+                            <LineBreak />
+                            <Run Text="  Note: posting new messages may break once 4chan is updated, since I can't test that part. If so, it'll be fixed as soon as possible (it takes about 7 days to publish an update to the marketplace)." />
+                            <LineBreak />
+                            <Run Text="  Also, new 4chan features like cross-board links aren't supported at this time." />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 1.8: "/>
+                            <LineBreak />
+                            <Run Text=" - Fixed the images loading after 4chan's website update. Just for information, even though the problem started the same day as v1.7's publication, the new version didn't break the app. All previous version were impacted as well." />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 1.7: "/>
+                            <LineBreak />
+                            <Run Text=" - You can now go directly to the next or previous picture from the fullscreen view" />
+                            <LineBreak />
+                            <Run Text=" - Slideshow hands-free mode! Press the play button in the fullscreen picture view, stand back, and enjoy. You can change the delay between each picture in the configuration screen (in the fullscreen view, expand the menu, then tap on 'Configuration')" />
+                            <LineBreak />
+                            <Run Text=" - When refreshing a thread, the view automatically scrolls back to the message you were reading" />
+                            <LineBreak />
+                            <Run Text=" - Replaced some message boxes by less intrusive notifications (for instance, when adding or removing a thread from favorites)" />
+                            <LineBreak />
+                            <Run Text=" - The 'Add new board' screen now recognizes /mlp/. Thanks everypony for notifying me." />
+                            <LineBreak />
+                            <Run Text=" - Fixed a few random crashes, and changed the error reporting system. The application may now be able to execute normally even after an unexpected error (but please don't forget to send me the reports so I can trace and fix the issues!)" />
+                            <LineBreak />
+                            <Run Text=" - Added this changelog screen because I was reaching the character limit in the marketplace's description" />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 1.6: "/>
+                            <LineBreak />
+                            <Run Text=" - 4chan's code slightly changed and the image couldn't be loaded anymore. Fixed the issue."/>
+                            <LineBreak />
+                            <Run Text=" - Brand new icon! All the credit goes to Andrea Mauro. Can't thank you enough, you rock."/>
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 1.5: "/>
+                            <LineBreak />
+                            <Run Text=" - You can now add a thread to your favorites! You can access the favorites page by clicking the star icon on the 4chan boards page" />
+                            <LineBreak />
+                            <Run Text=" - The number of messages of a thread is displayed (except in the favorites page, for now)" />
+                            <LineBreak />
+                            <Run Text=" - Added links to scroll directly to the top or the bottom of a thread" />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 1.4: "/>
+                            <LineBreak />
+                            <Run Text=" - Fixed a random bug where the contents of a board wouldn't be displayed, requiring a refresh"/>
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 1.3: "/>
+                            <LineBreak />
+                            <Run Text=" - Can now create new threads on 4chan" />
+                            <LineBreak />
+                            <Run Text=" - The id of the first message of each thread is now correct" />
+                            <LineBreak />
+                            <Run Text=" - Fixed the date of the messages not displayed on some boards" />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 1.2: "/>
+                            <LineBreak />
+                            <Run Text=" - Optimized the parser and made it more robust. It should greatly decrease the number of not supported pages on 4chan" />
+                            <LineBreak />
+                            <Run Text=" - Added the ability to quote and see quoted messages" />
+                            <LineBreak />
+                            <Run Text=" - Important UI change: in the thread view, you can't go to the fullscreen by tapping on the message like you could in 1.1. You now have to tap either on the thumbnail image or on the eye icon" />
+                            <LineBreak />
+                            <Run Text=" - Added an help page in the thread view" />
+                            <LineBreak />
+                            <Run Text=" - Date of messages is displayed relative to your timezone" />
+                            </TextBlock>
+
+                            <TextBlock Margin="0,0,0,16"
+                               FontSize="21.333"
+                               TextWrapping="Wrap"
+                                   Foreground="{StaticResource PhoneContrastBackgroundBrush}">
+                            <Run Text="   "/>
+                            <Run FontWeight="Bold" Text="What's new in 1.1: "/>
+                            <LineBreak />
+                            <Run Text=" - Major UI changes" />
+                            </TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </controls:PanoramaItem>
+        </controls:Panorama>
+    </Grid>
+
+</ImageBoardBrowser:BasePage>

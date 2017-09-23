@@ -1,0 +1,595 @@
+﻿<ImageBoardBrowser:BasePage
+    x:Class="ImageBoardBrowser.ViewTopic"
+    x:Name="ViewTopicPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Controls="clr-namespace:ImageBoard.Controls;assembly=ImageBoard.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:HtmlTextBlockControl="clr-namespace:WP7_Mango_HtmlTextBlockControl;assembly=WP7_Mango_HtmlTextBlockControl"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
+    xmlns:UI="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
+    xmlns:Controls1="clr-namespace:Coding4Fun.Phone.Controls;assembly=Coding4Fun.Phone.Controls"
+    xmlns:telerik="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Core"
+    xmlns:ImageBoardBrowser="clr-namespace:ImageBoardBrowser"
+    xmlns:converters="clr-namespace:ImageBoardBrowser.Converters"
+    d:DesignHeight="696"
+    d:DesignWidth="480"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    Loaded="PhoneApplicationPageLoaded"
+    Orientation="Portrait"
+    OrientationChanged="PhoneApplicationPage_OrientationChanged"
+    shell:SystemTray.IsVisible="True"
+    SupportedOrientations="PortraitOrLandscape"
+    mc:Ignorable="d">
+    <phone:PhoneApplicationPage.Resources>
+        <converters:NullVisibilityConverter x:Key="NullVisibilityConverter" />
+        <telerik:BoolToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
+        <converters:BoolToBrushConverter 
+            x:Key="SelectedMessageBackgroundConverter"
+            True="{StaticResource ResourceKey=PhoneChromeBrush}"
+            False="{StaticResource ResourceKey=PhoneBackgroundBrush}" />
+        
+        <converters:StringToBrushConverter x:Key="StringToBrushConverter" />
+        
+        <converters:BoolToBrushConverter
+            x:Key="SelectedMessageForegroundConverter"
+            True="{StaticResource ResourceKey=PhoneAccentBrush}"
+            False="{StaticResource ResourceKey=PhoneForegroundBrush}" />
+
+        <DataTemplate x:Key="MessageTemplate">
+            <Grid Margin="0 0 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="22" />
+                </Grid.RowDefinitions>
+
+                <Grid 
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Background="{StaticResource PhoneChromeBrush}"
+                    Margin="{StaticResource PhoneVerticalMargin}"
+                    Visibility="{Binding Path=IsLastReadMessage, Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
+                    <TextBlock
+                        Text="last message read"
+                        HorizontalAlignment="Center"
+                        Foreground="{StaticResource PhoneAccentBrush}"
+                        Margin="{StaticResource PhoneMargin}"/>
+                </Grid>
+
+                <Rectangle
+                    Stroke="{StaticResource PhoneAccentBrush}"
+                    StrokeThickness="2"
+                    StrokeDashArray="10 5"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="{StaticResource PhoneVerticalMargin}"
+                    Visibility="{Binding Path=IsLastReadMessage, Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}" />
+
+                <Grid Grid.Row="1" Grid.Column="0" Tap="GridTap">
+                    <Controls:EmbeddedImage
+                        telerik:InteractionEffectManager.IsInteractionEnabled="True"
+                        Margin="0 0 5 0"
+                        MaxHeight="100"
+                        MaxWidth="120"
+                        VerticalAlignment="Top"
+                        Referer="{Binding Path=Referer}"
+                        ImageUri="{Binding Path=ThumbImageLink}">
+                    </Controls:EmbeddedImage>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="1" Margin="5 0 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
+                        <TextBlock
+                            FontWeight="Bold"
+                            Foreground="{StaticResource ResourceKey=PhoneForegroundBrush}"
+                            Text="{Binding Path=PostTime, StringFormat=\{0:d\}}" />
+                        <TextBlock 
+                            FontWeight="Bold"
+                            Foreground="{StaticResource ResourceKey=PhoneForegroundBrush}"
+                            Text="{Binding Path=PostTime, StringFormat=\{0:T\}}" />
+
+                        <StackPanel Orientation="Horizontal">
+                            <Image
+                                Margin="0 0 5 0"
+                                Source="{Binding Path=CountryFlag}"
+                                Visibility="{Binding Path=CountryFlag, Converter={StaticResource ResourceKey=NullVisibilityConverter}}" />
+
+                            <TextBlock 
+                                FontWeight="Bold"
+                                Foreground="{StaticResource ResourceKey=PhoneForegroundBrush}"
+                                Text="{Binding Path=PosterName}"
+                                Visibility="{Binding Path=PosterName, Converter={StaticResource ResourceKey=NullVisibilityConverter}}"/>
+                        </StackPanel>
+                        <Grid
+                            Visibility="{Binding Path=PosterId, Converter={StaticResource ResourceKey=NullVisibilityConverter}}"
+                            Tap="IdTap">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2" />
+                                <RowDefinition />
+                                <RowDefinition Height="2" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock 
+                                Grid.Column="0"
+                                Grid.Row="1"
+                                Text="{Binding Path=PosterId, StringFormat='Id: {0}'}"
+                                FontSize="16" 
+                                TextDecorations="Underline"
+                                Foreground="{StaticResource ResourceKey=PhoneForegroundBrush}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Grid.Row="1"
+                                Margin="6 0 0 0"
+                                Text="{Binding Path=PreviousMessagesCount, StringFormat='({0})'}"
+                                FontSize="16"
+                                TextDecorations="Underline"
+                                Foreground="{StaticResource ResourceKey=PhoneForegroundBrush}" />
+                        </Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                FontSize="16"
+                                FontStyle="Italic"
+                                Text="No "
+                                Foreground="{StaticResource ResourceKey=PhoneForegroundBrush}" />
+                            <TextBlock
+                                FontSize="16"
+                                FontStyle="Italic"
+                                Foreground="{StaticResource PhoneForegroundBrush}"
+                                Text="{Binding Path=Id}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel 
+                        Grid.Row="0"
+                        Grid.Column="1" 
+                        Orientation="Horizontal"
+                        FlowDirection="RightToLeft">
+                        <Controls1:RoundButton 
+                            VerticalAlignment="Top"
+                            Width="70"
+                            Height="70"                                                    
+                            ImageSource="Icons\appbar.edit.rest.png"
+                            Click="ReplyMessageClick"/>
+
+                        <Controls1:RoundButton
+                            Visibility="{Binding Path=IsIconVisible, Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}"
+                            VerticalAlignment="Top"
+                            Width="70"
+                            Height="70"
+                            Tap="ImageTap"
+                            ImageSource="Icons\appbar.photo.redeye.rest.png" />
+                    </StackPanel>
+                </Grid>
+
+                <HtmlTextBlockControl:HtmlTextBlock
+                    Margin="0 5 0 5"
+                    CompatibilityModeActivated="HtmlTextBlockCompatibilityModeActivated"
+                    Foreground="{StaticResource ResourceKey=PhoneForegroundBrush}"
+                    GreenTextForeground="{Binding ElementName=ViewTopicPage, Path=DataContext.ViewModel.GreenTextIsGreen, Converter={StaticResource ResourceKey=GreenTextForegroundConverter}}"
+                    QuoteClicked="HtmlTextBlockQuoteClicked"
+                    LinkClicked="HtmlTextBlockLinkClicked"
+                    Text="{Binding Path=Content}"
+                    TextWrapping="Wrap"
+                    UseDomAsParser="True"
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2">
+                    <telerikPrimitives:RadContextMenu.ContextMenu>
+                        <telerikPrimitives:RadContextMenu Opening="RadContextMenuOpening">
+                            <telerikPrimitives:RadContextMenuItem Content="Copy" Tapped="RadContextMenuItemTapped" />
+                        </telerikPrimitives:RadContextMenu>
+                    </telerikPrimitives:RadContextMenu.ContextMenu>
+                </HtmlTextBlockControl:HtmlTextBlock>
+
+                <Grid
+                    Grid.Row="3"
+                    Grid.ColumnSpan="2"
+                    Visibility="{Binding Path=BackLinks, Converter={StaticResource ResourceKey=NullVisibilityConverter}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                        Style="{StaticResource PhoneTextSubtleStyle}"
+                        Text="Replies: " />
+
+                    <ItemsControl
+                        Margin="0"
+                        Padding="0"
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        ItemsSource="{Binding Path=BackLinks}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <telerikPrimitives:RadWrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <HyperlinkButton
+                                    Margin="{StaticResource ResourceKey=PhoneMargin}"
+                                    Foreground="{StaticResource ResourceKey=PhoneSubtleBrush}"
+                                    Content="{Binding Path=Id, StringFormat='>>{0}'}"
+                                    Tap="TextQuoteTap"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+
+                <Rectangle
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="0 10 0 10"
+                    Fill="{StaticResource PhoneSubtleBrush}" />
+            </Grid>
+        </DataTemplate>
+    </phone:PhoneApplicationPage.Resources>
+    <Grid x:Name="LayoutRoot"
+          Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="TitlePanel"
+                    Grid.Row="0"
+                    >
+            <TextBlock x:Name="ApplicationTitle"
+                       Margin="12,17,0,12"
+                       Style="{StaticResource ResourceKey=CollapsibleApplicationTitle}"
+                       Text="{Binding Path=ViewModel.ApplicationTitle}"
+                       FontSize="21.333"/>
+
+            <Grid Style="{StaticResource ResourceKey=SmallHeader}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Text="{Binding Path=ViewModel.Context.Board.Name}" 
+                    Style="{StaticResource ResourceKey=PhoneTextLargeStyle}" />
+
+                <HyperlinkButton
+                    x:Name="LinkScrollBottom"
+                    Grid.Column="1"
+                    Content="Bottom"
+                    Click="LinkScrollBottomClick" />
+
+                <HyperlinkButton
+                    x:Name="LinkScrollTop"
+                    Grid.Column="2"
+                    Content="Top"
+                    Click="LinkScrollTopClick" />
+            </Grid>
+        </StackPanel>
+
+        <telerikPrimitives:RadWindow
+            x:Name="IdPopup"
+            PlacementTarget="{Binding ElementName=LayoutRoot}"
+            WindowSizeMode="FitToPlacementTarget"
+            WindowClosing="PopupIdClosing"
+            IsClosedOnBackButton="False"
+            IsClosedOnOutsideTap="False">
+            <Border BorderBrush="{StaticResource ResourceKey=PhoneForegroundBrush}">
+                <Border.Background>
+                    <SolidColorBrush Opacity=".9" Color="{StaticResource ResourceKey=PhoneBackgroundColor}" />
+                </Border.Background>
+                <Grid MaxHeight="600" Margin="12 12 12 12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Grid.Row="0"
+                        Grid.Column="0">
+                        <TextBlock Text="Messages with id: "
+                               FontStyle="Italic"
+                               FontSize="16" />
+
+                        <TextBlock Text="{Binding Path=SelectedId}"
+                               FontStyle="Italic"
+                               FontSize="16" />
+                    </StackPanel>
+
+                    <Button Grid.Row="1"
+                            Grid.Column="0"
+                            Click="ButtonCloseIdPopup"
+                            Content="Close" />
+
+                    <telerikPrimitives:RadDataBoundListBox
+                        Grid.Row="2"
+                        ItemsSource="{Binding Path=MessagesWithSameId}"
+                        ItemTemplate="{StaticResource ResourceKey=MessageTemplate}">
+                
+                    </telerikPrimitives:RadDataBoundListBox>
+                </Grid>
+            </Border>
+        </telerikPrimitives:RadWindow>
+        
+        <Popup x:Name="QuotePopup"
+               Grid.Row="0"
+               DataContext=""
+               IsOpen="False"
+               Opened="QuotePopupOpened"
+               Closed="QuotePopupClosed"
+               telerik:InteractionEffectManager.IsInteractionEnabled="True"
+               Visibility="Collapsed">
+            <Border x:Name="PopupBorder"
+                    Background="{StaticResource PhoneBackgroundBrush}"
+                    BorderBrush="{StaticResource PhoneForegroundBrush}"
+                    BorderThickness="2">
+                <Grid x:Name="PopupGrid"
+                      MaxHeight="600"
+                      Margin="12 12 60 12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2">
+
+                        <TextBlock
+                            Text="Quoted message: "
+                            FontStyle="Italic"
+                            FontSize="16" />
+
+                        <TextBlock
+                            Text="{Binding Path=Id}"
+                            FontStyle="Italic"
+                            FontSize="16" />
+                    </StackPanel>
+
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        Click="ButtonClick"
+                        Content="Close" />
+
+                    <Controls:EmbeddedImage
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        MaxHeight="100"
+                        MaxWidth="120"
+                        Margin="0 0 5 0"
+                        VerticalAlignment="Top"
+                        Referer="{Binding Path=Referer}"
+                        ImageUri="{Binding Path=ThumbImageLink}"
+                        Tap="GridTap">
+                        <Controls:EmbeddedImage.RenderTransform>
+                            <ScaleTransform x:Name="Scale" />
+                        </Controls:EmbeddedImage.RenderTransform>
+                        <Controls:EmbeddedImage.Resources>
+                            <Storyboard x:Key="NextPage"
+                                        AutoReverse="True"
+                                        Storyboard.TargetName="Scale">
+                                <DoubleAnimation Duration="0:0:0.1"
+                                                 From="1"
+                                                 Storyboard.TargetProperty="ScaleX"
+                                                 To=".6">
+                                    <DoubleAnimation.EasingFunction>
+                                        <ExponentialEase EasingMode="EaseIn" />
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <DoubleAnimation Duration="0:0:0.1"
+                                                 From="1"
+                                                 Storyboard.TargetProperty="ScaleY"
+                                                 To=".6">
+                                    <DoubleAnimation.EasingFunction>
+                                        <ExponentialEase EasingMode="EaseIn" />
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </Controls:EmbeddedImage.Resources>
+                    </Controls:EmbeddedImage>
+
+                    <Grid Grid.Row="2" Grid.Column="1"
+                          Margin="5 0 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="150" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0">
+                            <TextBlock FontWeight="Bold" Text="{Binding Path=PostTime, StringFormat=\{0:d\}}" />
+                            <TextBlock FontWeight="Bold" Text="{Binding Path=PostTime, StringFormat=\{0:T\}}" />
+                            <StackPanel Orientation="Horizontal">
+                                <Image
+                                    Margin="0 0 5 0"
+                                    Source="{Binding Path=CountryFlag}"
+                                    Visibility="{Binding Path=CountryFlag, Converter={StaticResource ResourceKey=NullVisibilityConverter}}" />
+
+                                <TextBlock
+                                    FontWeight="Bold"
+                                    Text="{Binding Path=PosterName}"
+                                    Visibility="{Binding Path=PosterName, Converter={StaticResource ResourceKey=NullVisibilityConverter}}"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="0" Grid.Column="1"
+                                    Orientation="Horizontal"
+                                    FlowDirection="RightToLeft">
+                            <Controls1:RoundButton
+                                VerticalAlignment="Top"
+                                Width="70"
+                                Height="70"                                                    
+                                ImageSource="Icons\appbar.edit.rest.png"
+                                Click="ReplyMessageClick" />
+
+                            <Controls1:RoundButton
+                                Visibility="{Binding Path=IsIconVisible, Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}"
+                                VerticalAlignment="Top"
+                                Width="70"
+                                Height="70"
+                                Tap="ImageTap"
+                                ImageSource="Icons\appbar.photo.redeye.rest.png" />
+                        </StackPanel>
+                    </Grid>
+
+                    <ScrollViewer Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                        <HtmlTextBlockControl:HtmlTextBlock
+                            Margin="0 5 0 5"
+                            CompatibilityModeActivated="HtmlTextBlockCompatibilityModeActivated"
+                            Foreground="{StaticResource ResourceKey=PhoneForegroundBrush}"
+                            GreenTextForeground="{Binding ElementName=ViewTopicPage, Path=DataContext.ViewModel.GreenTextIsGreen, Converter={StaticResource ResourceKey=GreenTextForegroundConverter}}"
+                            QuoteClicked="HtmlTextBlockQuoteClicked"
+                            LinkClicked="HtmlTextBlockLinkClicked"                                                                
+                            Text="{Binding Path=Content}"
+                            TextWrapping="Wrap"
+                            UseDomAsParser="True" />
+                    </ScrollViewer>
+
+                    <Grid
+                        Grid.Row="4"
+                        Grid.ColumnSpan="2"
+                        Visibility="{Binding Path=BackLinks, Converter={StaticResource ResourceKey=NullVisibilityConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock
+                            Style="{StaticResource ResourceKey=PhoneTextSubtleStyle}"
+                            Text="Replies: " />
+
+                        <ItemsControl
+                            Margin="0"
+                            Padding="0"
+                            Grid.Row="1"
+                            Grid.ColumnSpan="2"
+                            ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            ItemsSource="{Binding Path=BackLinks}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <telerikPrimitives:RadWrapPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <HyperlinkButton
+                                        Margin="{StaticResource ResourceKey=PhoneMargin}"
+                                        Foreground="{StaticResource ResourceKey=PhoneSubtleBrush}"
+                                        Content="{Binding Path=Id, StringFormat='>>{0}'}"
+                                        Tap="TextQuoteTap"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Popup>
+
+        <Grid x:Name="ContentPanel"
+              Grid.Row="1"
+              Margin="12,0,12,0">
+            <telerikPrimitives:RadDataBoundListBox
+                EmptyContent=""
+                x:Name="ListBoxMessages"
+                ItemsSource="{Binding Path=ViewModel.Messages}" 
+                ItemTemplate="{StaticResource ResourceKey=MessageTemplate}"
+                ItemAnimationMode="PlayAll"
+                SelectionChanging="RadDataBoundListBoxSelectionChanging">
+                <telerikPrimitives:RadDataBoundListBox.ListHeaderContent>
+                    <StackPanel>
+                        <TextBlock x:Name="TextBoxCompatibility"
+                               Margin="12 0 12 10"
+                               Foreground="Red"
+                               Tap="TextBoxCompatibilityTap"
+                               Text="Compatibility mode is activated"
+                               TextDecorations="Underline"
+                               Visibility="Collapsed" />
+                    </StackPanel>
+                </telerikPrimitives:RadDataBoundListBox.ListHeaderContent>
+                <telerikPrimitives:RadDataBoundListBox.ItemAddedAnimation>
+                    <telerik:RadFadeAnimation StartOpacity="0" InitialDelay="0:0:0.3" EndOpacity="1" Duration="0:0:0.9">
+                        <telerik:RadFadeAnimation.Easing>
+                            <CubicEase EasingMode="EaseOut"/>
+                        </telerik:RadFadeAnimation.Easing>
+                    </telerik:RadFadeAnimation>
+                </telerikPrimitives:RadDataBoundListBox.ItemAddedAnimation>
+            </telerikPrimitives:RadDataBoundListBox>
+
+        </Grid>
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsMenuEnabled="True"
+                              IsVisible="True">
+            <shell:ApplicationBarIconButton x:Name="MenuRefresh"
+                                            Click="MenuRefreshClick"
+                                            IconUri="/Icons/appbar.refresh.rest.png"
+                                            Text="Refresh" />
+
+            <shell:ApplicationBarIconButton x:Name="MenuReply"
+                                            Click="MenuReplyClick"
+                                            IconUri="/Icons/appbar.edit.rest.png"
+                                            Text="Reply" />
+
+            <shell:ApplicationBarIconButton x:Name="MenuFavorites"
+                                            Click="MenuFavoritesClick"
+                                            IconUri="/Icons/appbar.favs.addto.rest.png"
+                                            Text="Add to favorites" />
+
+            <shell:ApplicationBarIconButton x:Name="MenuHelp"
+                                            Click="MenuHelpClick"
+                                            IconUri="/Icons/appbar.questionmark.rest.png"
+                                            Text="Help" />
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="open in web browser"
+                                              Click="MenuOpenWebBrowserClick" />
+                <shell:ApplicationBarMenuItem Text="configuration"
+                                              Click="MenuConfigurationClick" />
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</ImageBoardBrowser:BasePage>

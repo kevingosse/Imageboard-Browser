@@ -1,0 +1,201 @@
+﻿<imageBoardBrowser:BasePage
+    x:Class="ImageBoardBrowser.Favorites"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
+    xmlns:htmlTextBlockControl="clr-namespace:WP7_Mango_HtmlTextBlockControl;assembly=WP7_Mango_HtmlTextBlockControl"
+    xmlns:ui="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
+    xmlns:controls="clr-namespace:ImageBoard.Controls;assembly=ImageBoard.Controls"
+    xmlns:telerik="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Core"
+    xmlns:imageBoardBrowser="clr-namespace:ImageBoardBrowser"
+    xmlns:converters="clr-namespace:ImageBoardBrowser.Converters"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True">
+    <imageBoardBrowser:BasePage.Resources>
+        <converters:HistoryToColorConverter
+            x:Key="HistoryToColorConverter"
+            NeutralColor="Transparent"
+            VisitedColor="Transparent"
+            NewRepliesColor="LimeGreen" />
+
+        <telerik:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </imageBoardBrowser:BasePage.Resources>
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock
+                x:Name="ApplicationTitle"
+                Style="{StaticResource PhoneTextNormalStyle}"
+                Text="{Binding Path=ViewModel.ApplicationTitle}"
+                FontSize="21.333"/>
+
+            <StackPanel Style="{StaticResource SmallHeader}">
+                <TextBlock
+                    x:Name="PageTitle"
+                    Style="{StaticResource PhoneTextExtraLargeStyle}"
+                    Text="favorites" />
+            </StackPanel>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            
+            <Grid
+                Grid.Row="0"
+                Visibility="{Binding Path=NetworkError, Converter={StaticResource BoolToVisibilityConverter}}"
+                Background="Red">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Rectangle 
+                    Width="48"
+                    Height="48"
+                    Grid.Column="0"
+                    Margin="12 12 6 12"
+					Fill="{StaticResource PhoneForegroundBrush}">
+                    <Rectangle.OpacityMask>
+                        <ImageBrush ImageSource="/Icons/Link.png"/>
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                
+                <TextBlock
+                    Grid.Column="1"
+                    Foreground="White"
+                    Text="A network error occured while refreshing some favorites"
+                    Margin="6 12 12 12"
+                    TextWrapping="Wrap" />
+            </Grid>
+            
+            <telerikPrimitives:RadDataBoundListBox
+                x:Name="ListFavorites"
+                Grid.Row="1"
+                ItemsSource="{Binding Path=FavoriteList}"
+                ItemTap="ListFavoritesItemTap">
+                <telerikPrimitives:RadDataBoundListBox.EmptyContent>
+                    <StackPanel>
+                        <RichTextBox>
+                            <Paragraph>
+                                <Run Text="You have no favorites!" />
+                                <LineBreak />
+                            </Paragraph>
+                            <Paragraph>
+                                <Run Text="To add a favorite, open a thread you like, then click the " />
+                                   <InlineUIContainer>
+                                        <Ellipse Width="48"
+                                                 Height="48"
+                                                 Margin="0 0 0 -13"
+								             Fill="{StaticResource PhoneForegroundBrush}">
+                                            <Ellipse.OpacityMask>
+                                                <ImageBrush ImageSource="/Icons/appbar.favs.addto.rest.png"/>
+                                            </Ellipse.OpacityMask>
+                                        </Ellipse>
+                                    </InlineUIContainer>
+
+                                <Run Text="icon at the bottom of the screen."  />
+                                <LineBreak />
+                            </Paragraph>
+
+                            <Paragraph>
+                                <Run Text="To remove a favorite, open the thread and click on the" />
+                                <InlineUIContainer>
+                                    <Ellipse Width="36"
+                                             Height="36"
+                                             Margin="0 0 0 -5"
+								             Fill="{StaticResource PhoneForegroundBrush}">
+                                        <Ellipse.OpacityMask>
+                                            <ImageBrush ImageSource="/Icons/appbar.favs.removefrom.rest.png"/>
+                                        </Ellipse.OpacityMask>
+                                    </Ellipse>
+                                </InlineUIContainer>
+                                <Run Text="icon." />
+                                <LineBreak />
+                            </Paragraph>
+                        </RichTextBox>
+                    </StackPanel>
+                </telerikPrimitives:RadDataBoundListBox.EmptyContent>
+                <telerikPrimitives:RadDataBoundListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Width="200" Height="200" Margin="5">
+                            <Image Source="{Binding Path=Topic.ThumbImageLink}" MaxHeight="200" MaxWidth="200" Stretch="UniformToFill" />
+
+                            <Rectangle
+                                Fill="Red"
+                                Opacity=".3"
+                                Visibility="{Binding Path=IsDead, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                                       
+                            <Border BorderThickness="6" Opacity="1">
+                                <Border.BorderBrush>
+                                    <RadialGradientBrush RadiusX="1" RadiusY="1" >
+                                        <GradientStop Color="Transparent" Offset="0.241" />
+                                        <GradientStop
+                                            Color="{Binding Path=History, Converter={StaticResource HistoryToColorConverter}}"
+                                            Offset="0.757" />
+                                    </RadialGradientBrush>
+                                </Border.BorderBrush>
+                            </Border>
+
+                            <telerikPrimitives:RadBusyIndicator
+                                AnimationStyle="AnimationStyle4"
+                                IsRunning="{Binding Path=IsLoading}">
+                                <telerikPrimitives:RadBusyIndicator.Background>
+                                    <SolidColorBrush Color="{StaticResource PhoneChromeColor}" Opacity=".7" />
+                                </telerikPrimitives:RadBusyIndicator.Background>
+                            </telerikPrimitives:RadBusyIndicator>
+
+                            <Image
+                                Source="Icons/Link.png"
+                                Visibility="{Binding Path=NetworkError, Converter={StaticResource BoolToVisibilityConverter}}"
+                                Height="48"
+                                Width="48"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top" />
+
+                        </Grid>
+                    </DataTemplate>
+                </telerikPrimitives:RadDataBoundListBox.ItemTemplate>
+                <telerikPrimitives:RadDataBoundListBox.ItemAddedAnimation>
+                    <telerik:RadFadeAnimation StartOpacity="0" InitialDelay="0:0:0.0" EndOpacity="1" Duration="0:0:0.9">
+                        <telerik:RadFadeAnimation.Easing>
+                            <CubicEase EasingMode="EaseOut"/>
+                        </telerik:RadFadeAnimation.Easing>
+                    </telerik:RadFadeAnimation>
+                </telerikPrimitives:RadDataBoundListBox.ItemAddedAnimation>
+                <telerikPrimitives:RadDataBoundListBox.VirtualizationStrategyDefinition>
+                    <telerikPrimitives:WrapVirtualizationStrategyDefinition Orientation="Horizontal"/>
+                </telerikPrimitives:RadDataBoundListBox.VirtualizationStrategyDefinition>
+            </telerikPrimitives:RadDataBoundListBox>
+        </Grid>
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsMenuEnabled="True" IsVisible="True" Opacity=".4">
+            <shell:ApplicationBarIconButton x:Name="MenuRefresh"
+                                            Click="MenuRefreshClick"
+                                            IconUri="/Icons/appbar.refresh.rest.png"
+                                            Text="refresh" />
+            <shell:ApplicationBarIconButton x:Name="MenuPrune"
+                                            Click="MenuPruneClick"
+                                            IconUri="/Icons/appbar.delete.rest.png"
+                                            Text="prune dead threads" />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</imageBoardBrowser:BasePage>

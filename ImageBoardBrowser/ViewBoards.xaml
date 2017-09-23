@@ -1,0 +1,150 @@
+﻿<ImageBoardBrowser:BasePage x:Class="ImageBoardBrowser.ViewBoards"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
+                            xmlns:UI="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
+                            xmlns:telerik="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Core"
+              xmlns:ImageBoardBrowser="clr-namespace:ImageBoardBrowser" d:DesignHeight="696"
+                            d:DesignWidth="480"
+                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                            FontSize="{StaticResource PhoneFontSizeNormal}"
+                            Foreground="{StaticResource PhoneForegroundBrush}"
+                            Loaded="PhoneApplicationPageLoaded"
+                            Orientation="Portrait"
+                            shell:SystemTray.IsVisible="True"
+                            SupportedOrientations="PortraitOrLandscape"
+                            mc:Ignorable="d">
+    <Grid x:Name="LayoutRoot"
+          Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="TitlePanel"
+                    Grid.Row="0"
+                    Margin="12,17,0,50">
+            <TextBlock x:Name="ApplicationTitle"
+                       FontSize="21.333"
+                       Style="{StaticResource PhoneTextNormalStyle}"
+                       Text="{Binding Path=ViewModel.ApplicationTitle}" />
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <ListBox ItemsSource="{Binding Path=ViewModel.CustomBoards}"
+                     SelectionChanged="ListBoxSelectionChanged"
+                     telerik:InteractionEffectManager.IsInteractionEnabled="True">
+                <ListBox.Foreground>
+                    <SolidColorBrush Color="{StaticResource PhoneAccentColor}" />
+                </ListBox.Foreground>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <telerikPrimitives:RadContextMenu.ContextMenu>
+                                <telerikPrimitives:RadContextMenu>
+                                    <telerikPrimitives:RadContextMenuItem Content="Pin to start"                                                                          
+                                                                              Tap="MenuItemPinClick" />
+                                    <telerikPrimitives:RadContextMenuItem Content="Delete"
+                                                          Tap="MenuItemDeleteClick" />
+                                </telerikPrimitives:RadContextMenu>
+                            </telerikPrimitives:RadContextMenu.ContextMenu>
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource PhoneTextExtraLargeStyle}"
+                                           Text="{Binding Path=Name}" />
+
+                                <TextBlock Style="{StaticResource PhoneTextSubtleStyle}"
+                                           Text="{Binding Path=Description}" />
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ScrollViewer x:Name="ScrollViewerEmptyList">
+                <TextBlock x:Name="TextEmptyList"
+                       Margin="13,0,13,16"
+                       FontSize="21.333"
+                       Foreground="{StaticResource PhoneForegroundBrush}"
+                       TextWrapping="Wrap"><Run Text="   " /><Run FontSize="32"
+                     Text="   ">
+                    <Run.Foreground>
+                        <SolidColorBrush Color="Red">
+                            <SolidColorBrush.RelativeTransform>
+                                <MatrixTransform Matrix="Identity" />
+                            </SolidColorBrush.RelativeTransform>
+                            <SolidColorBrush.Transform>
+                                <MatrixTransform Matrix="Identity" />
+                            </SolidColorBrush.Transform>
+                        </SolidColorBrush>
+                    </Run.Foreground>
+                </Run><Run FontSize="32"
+                     FontWeight="Bold"
+                     Text="Your board list is empty! "
+                     TextDecorations="Underline">
+                    <Run.Foreground>
+                        <SolidColorBrush Color="Red">
+                            <SolidColorBrush.RelativeTransform>
+                                <MatrixTransform Matrix="Identity" />
+                            </SolidColorBrush.RelativeTransform>
+                            <SolidColorBrush.Transform>
+                                <MatrixTransform Matrix="Identity" />
+                            </SolidColorBrush.Transform>
+                        </SolidColorBrush>
+                    </Run.Foreground>
+                </Run>
+                <LineBreak /><Run Text=" " />
+                <LineBreak /><Run Text=" " /><Run Text="   To browse" />
+                <Run Text="{Binding Path=ViewModel.Context.BoardManager.Name}" />
+                <Run Text="using this app, you must first add the boards you intend to use." /><Run Text=" " />
+                <LineBreak /><Run Text=" " />
+                <LineBreak /><Run Text=" " /><Run Text="   To do this, simply click on the 'Add new board' button at the bottom, and type the board name (for instance," />
+                <Run Text="{Binding Path=ViewModel.Context.BoardManager.SampleBoardName}" />
+                <Run Text=").  You can also type a description to recognize your boards more easily. " /><Run Text=" " />
+                <LineBreak /><Run Text=" " />
+                <LineBreak /><Run Text=" " /><Run Text="   If you don't know the name of the boards, you'll have to check directly on the" />
+                <Run Text="{Binding Path=ViewModel.Context.BoardManager.Name}" />
+                <Run Text="website. " />
+                </TextBlock>
+            </ScrollViewer>
+            <Button x:Name="ButtonAddBoard"
+                    Grid.Row="1"
+                    Height="80"
+                    Click="ButtonAddBoardClick"
+                    Content="Add new board"
+                    RenderTransformOrigin="0.5,0.5">
+                <Button.RenderTransform>
+                    <CompositeTransform />
+                </Button.RenderTransform>
+            </Button>
+                        
+        </Grid>
+
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsMenuEnabled="False"
+                              IsVisible="True">
+            <shell:ApplicationBarIconButton x:Name="MenuFavorites"
+                                            Click="MenuFavoritesClick"
+                                            IconUri="/Icons/appbar.favs.rest.png"
+                                            Text="Favorites" />
+            <shell:ApplicationBarIconButton x:Name="MenuSettings" 
+                                            Click="MenuSettingsClick"
+                                            IconUri="/Icons/appbar.feature.settings.rest.png"
+                                            Text="Settings" />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+</ImageBoardBrowser:BasePage>
